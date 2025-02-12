@@ -5,6 +5,9 @@ import SidebarMobile from './_components/SidebarMobile';
 import { useState } from 'react';
 import useFilter from '~/hooks/common/useFilter';
 import img from '~/assets/logo.png';
+import { useTypedSelector } from '~/store/store';
+import { logout } from '~/store/slice/authSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Header() {
     const navigate = useNavigate();
@@ -13,6 +16,11 @@ export default function Header() {
     const handleSearch = () => {
         updateQueryParam({ ...query, search: searchQuery, page: '1', limit: '10' });
         navigate(`/search?search=${searchQuery}&page=1&limit=10`);
+    };
+    const user = useTypedSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
+    const handleLogOut = () => {
+        dispatch(logout());
     };
     return (
         <header className='h-16 bg-[#1A94FF]'>
@@ -45,30 +53,50 @@ export default function Header() {
                         <span className='text-sm text-white'>Tìm kiếm</span>
                     </button>
                 </div>
-                <div className='flex items-center gap-4'>
+                <div className='flex items-center gap-5'>
                     <div className='hidden items-center gap-2 text-white md:flex'>
                         <UserOutlined className='text-3xl' />
-                        <div className='text-sm'>
-                            <p>
-                                <Link className='duration-300 hover:opacity-80' to={'/'}>
-                                    Đăng nhập
-                                </Link>
-                                /{' '}
-                                <Link className='duration-300 hover:opacity-80' to={'/'}>
-                                    Đăng ký
-                                </Link>
-                            </p>
-                            <Link className='text-sm duration-300 hover:opacity-80' to={'/'}>
-                                Tài khoản
-                            </Link>
+                        <div className='min-w-[128px] text-sm'>
+                            {user ? (
+                                <>
+                                    <p>{user.userName}</p>
+                                    <p
+                                        onClick={handleLogOut}
+                                        className='cursor-pointer text-sm duration-300 hover:opacity-80'
+                                    >
+                                        Đăng xuất
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <p>
+                                        <Link className='duration-300 hover:opacity-80' to={'/auth/login'}>
+                                            Đăng nhập
+                                        </Link>
+                                        /{' '}
+                                        <Link className='duration-300 hover:opacity-80' to={'/auth/register'}>
+                                            Đăng ký
+                                        </Link>
+                                    </p>
+                                    <Link className='text-sm duration-300 hover:opacity-80' to={'/'}>
+                                        Tài khoản
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
                     <div className='flex items-center gap-2 text-sm text-white'>
-                        <Badge count={5} offset={[0, 2]}>
+                        {user ? (
+                            <Badge count={5} offset={[0, 2]}>
+                                <div className='text-white'>
+                                    <ShoppingCartOutlined color='#fff' className='text-3xl' />
+                                </div>
+                            </Badge>
+                        ) : (
                             <div className='text-white'>
                                 <ShoppingCartOutlined color='#fff' className='text-3xl' />
                             </div>
-                        </Badge>
+                        )}
                         <p className='hidden md:block'>Giỏ hàng</p>
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 import ErrorPage from '~/pages/Error/ErrorPage';
 import NotFoundPage from '~/pages/NotFound/NotFound';
 import MainLayout from '../layouts/client/MainLayout';
-import { HomePage, ProductDetailPage, SearchPage, Suspense } from './LazyRoutes';
+import { HomePage, LoginPage, ProductDetailPage, RegisterPage, SearchPage, Suspense } from './LazyRoutes';
 import { Navigate } from 'react-router-dom';
+import AuthLayout from '~/layouts/auth/AuthLayout';
 
 const PublicRoutes = [
     {
@@ -31,6 +32,29 @@ const PublicRoutes = [
                 element: (
                     <Suspense>
                         <ProductDetailPage />
+                    </Suspense>
+                ),
+            },
+        ],
+    },
+    {
+        path: '/auth/',
+        element: <AuthLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: 'register',
+                element: (
+                    <Suspense>
+                        <RegisterPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: 'login',
+                element: (
+                    <Suspense>
+                        <LoginPage />
                     </Suspense>
                 ),
             },
