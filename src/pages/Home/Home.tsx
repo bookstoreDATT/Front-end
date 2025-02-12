@@ -22,7 +22,7 @@ export default function HomePage() {
                     categoryData.data.length !== 0 ? (
                         <ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm md:flex-col md:gap-1'>
                             {categoryData?.data.map((item, index) => (
-                                <li>
+                                <li key={index}>
                                     <Link to={'/'} className='hover:opacity-80'>
                                         {item.name}
                                     </Link>
