@@ -36,15 +36,15 @@ export default function Login() {
     };
     return (
         <>
-            <div className='h-full max-w-[1240px] py-4 sm:mx-4 md:mx-6 xl:mx-auto'>
-                <div className='mt-12 grid grid-cols-[60%_40%] items-center'>
-                    <div className='flex flex-col items-start justify-center gap-5'>
+            <div className='mx-2 h-full max-w-[1240px] py-4 sm:mx-4 md:mx-6 xl:mx-auto'>
+                <div className='mt-12 flex items-center justify-center md:grid md:grid-cols-[60%_40%]'>
+                    <div className='hidden flex-col items-start justify-center gap-5 md:flex'>
                         <img src={img} className='w-2xs' alt='' />
                         <p className='text-2xl font-medium text-white'>
                             Trang mua sắm sách vở trực tuyến uy tín, nhanh chóng, hàng đầu.
                         </p>
                     </div>
-                    <div className='rounded-md bg-white p-6'>
+                    <div className='w-full rounded-md bg-white p-6 md:w-auto'>
                         <h1 className='mb-6 text-xl font-medium'>Đăng nhập tài khoản</h1>
                         <Form onFinish={handleSubmit(onSubmit)} layout='vertical' autoComplete='off'>
                             {/* Input Email */}

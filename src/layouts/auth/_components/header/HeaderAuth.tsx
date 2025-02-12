@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import img from '~/assets/logo.png';
 export default function HeaderAuth() {
     const location = useLocation();
     return (
-        <header className='max-w-[1240px] sm:mx-4 md:mx-6 xl:mx-auto'>
+        <header className='mx-4 max-w-[1240px] sm:mx-4 md:mx-6 xl:mx-auto'>
             <div className='flex items-center justify-between py-2'>
                 <div className='flex items-center gap-2'>
                     <Link to={'/'}>
