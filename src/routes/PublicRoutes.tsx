@@ -1,6 +1,6 @@
 import ErrorPage from '~/pages/Error/ErrorPage';
 import MainLayout from '../layouts/client/MainLayout';
-import { HomePage, Suspense } from './LazyRoutes';
+import { HomePage, SearchPage, Suspense } from './LazyRoutes';
 
 const PublicRoutes = [
     {
@@ -13,6 +13,14 @@ const PublicRoutes = [
                 element: (
                     <Suspense>
                         <HomePage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/search',
+                element: (
+                    <Suspense>
+                        <SearchPage />
                     </Suspense>
                 ),
             },

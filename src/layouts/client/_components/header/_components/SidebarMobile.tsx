@@ -1,7 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useFilter from '~/hooks/common/useFilter';
 
 export default function SidebarMobile({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
@@ -10,6 +11,14 @@ export default function SidebarMobile({ children }: { children: React.ReactNode 
     };
     const onClose = () => {
         setOpen(false);
+    };
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const { query, updateQueryParam } = useFilter();
+    const handleSearch = () => {
+        setOpen(false);
+        updateQueryParam({ ...query, search: searchQuery, page: '1', limit: '10' });
+        navigate(`/search?search=${searchQuery}&page=1&limit=10`);
     };
     return (
         <>
@@ -27,14 +36,24 @@ export default function SidebarMobile({ children }: { children: React.ReactNode 
                 onClose={onClose}
                 open={open}
             >
-                <h3 className='text-base text-sm font-medium'>Tìm kiếm sản phẩm</h3>
+                <h3 className='text-base font-medium'>Tìm kiếm sản phẩm</h3>
                 <div className='mt-2 flex h-8 items-center'>
                     <input
+                        value={searchQuery}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleSearch();
+                            }
+                        }}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         type='text'
                         placeholder='Nhập tên sách hoặc tên tác giả...'
                         className='h-full w-[70%] rounded-l-md border-[1px] bg-white px-2 py-2 outline-none'
                     />
-                    <button className='flex h-full items-center justify-center rounded-r-md bg-[#0D5CB6] px-4 text-white'>
+                    <button
+                        onClick={handleSearch}
+                        className='flex h-full cursor-pointer items-center justify-center rounded-r-md bg-[#0D5CB6] px-4 text-white'
+                    >
                         <SearchOutlined />
                         <span className='hidden text-sm text-white sm:block'>Tìm kiếm</span>
                     </button>

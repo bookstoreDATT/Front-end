@@ -1,38 +1,42 @@
+import { Pagination, Spin } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '~/components/productCard/ProductCard';
+import useFilter from '~/hooks/common/useFilter';
+import { useGetAllCategory } from '~/hooks/queries/category/useGetAllCategory';
 import { useGetAllProducts } from '~/hooks/queries/products/useGetAllProducts';
-
 export default function HomePage() {
-    const [filter, setFilter] = useState<'trending' | 'bestPrice' | 'new' | 'lowPrice' | 'highPrice'>('trending');
-    const { data } = useGetAllProducts();
-    console.log(data);
+    const [filter, setFilter] = useState<'all' | 'bestPrice' | 'new' | 'lowPrice' | 'highPrice'>('all');
+    const { query, updateQueryParam } = useFilter();
+    const limit = 10;
+    const { data, isPending } = useGetAllProducts(query);
+    const onChangePaginate = (page: number) => {
+        updateQueryParam({ ...query, page: page.toString(), limit: String(limit) });
+    };
+    const { data: categoryData, isPending: categoryIsPending } = useGetAllCategory();
     return (
         <div className='flex flex-col gap-[5%] md:flex-row xl:gap-[10%]'>
             <div>
                 <h3 className='whitespace-nowrap'>Danh mục sản phẩm</h3>
-                <ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm md:flex-col md:gap-1'>
-                    <li>
-                        <Link to={'/'} className='hover:opacity-80'>
-                            Sách Tiếng Việt
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to={'/'} className='hover:opacity-80'>
-                            Sách giáo khoa
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to={'/'} className='hover:opacity-80'>
-                            Truyện tranh
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to={'/'} className='hover:opacity-80'>
-                            Tiểu thuyết
-                        </Link>
-                    </li>
-                </ul>
+                {categoryData && !isPending ? (
+                    categoryData.data.length !== 0 ? (
+                        <ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm md:flex-col md:gap-1'>
+                            {categoryData?.data.map((item, index) => (
+                                <li>
+                                    <Link to={'/'} className='hover:opacity-80'>
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>Không có danh mục</p>
+                    )
+                ) : (
+                    <div className='flex h-12 items-center justify-center'>
+                        <Spin size='small' />
+                    </div>
+                )}
             </div>
             <div className='mt-4 md:mt-0'>
                 <div>
@@ -47,10 +51,10 @@ export default function HomePage() {
                     <ul className='flex flex-wrap gap-2 md:gap-6'>
                         <li>
                             <button
-                                onClick={() => setFilter('trending')}
-                                className={`${filter === 'trending' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
+                                onClick={() => setFilter('all')}
+                                className={`${filter === 'all' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
                             >
-                                <p className={`${filter === 'trending' && 'text-[#0D5CB6]'} text-center`}>Phổ biến</p>
+                                <p className={`${filter === 'all' && 'text-[#0D5CB6]'} text-center`}>Tất cả</p>
                             </button>
                         </li>
                         <li>
@@ -86,48 +90,37 @@ export default function HomePage() {
                             </button>
                         </li>
                     </ul>
-                    <div className='mt-4 grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                        {data &&
-                            data?.data.map((item: any, index: number) => <ProductCard product={item} key={index} />)}
-                    </div>
+                    {data && !isPending ? (
+                        <>
+                            {data.data.length !== 0 ? (
+                                <>
+                                    <div className='mt-4 grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+                                        {data.data.map((item, index) => (
+                                            <ProductCard product={item} key={index} />
+                                        ))}
+                                    </div>
+                                    <div className='mt-6'>
+                                        <Pagination
+                                            disabled={isPending}
+                                            align='center'
+                                            onChange={onChangePaginate}
+                                            defaultCurrent={Number(query.page)}
+                                            current={Number(query.page)}
+                                            total={data.totalDocs}
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <div className='flex min-h-[30vh] w-full items-center justify-center'>
+                                    <h2 className='font-medium'>Không tìm thấy sản phẩm nào</h2>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className='flex min-h-[50vh] w-[100%] items-center justify-center'>
+                            <Spin size='large' />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

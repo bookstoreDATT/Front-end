@@ -1,9 +1,18 @@
 import { MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SidebarMobile from './_components/SidebarMobile';
+import { useState } from 'react';
+import useFilter from '~/hooks/common/useFilter';
 
 export default function Header() {
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const { query, updateQueryParam } = useFilter();
+    const handleSearch = () => {
+        updateQueryParam({ ...query, search: searchQuery, page: '1', limit: '10' });
+        navigate(`/search?search=${searchQuery}&page=1&limit=10`);
+    };
     return (
         <header className='h-16 bg-[#1A94FF]'>
             <div className='mx-6 flex max-w-[1240px] items-center justify-between pt-2 md:justify-between xl:mx-auto'>
@@ -15,11 +24,22 @@ export default function Header() {
                 </Link>
                 <div className='hidden items-center justify-center md:flex'>
                     <input
+                        value={searchQuery}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleSearch();
+                            }
+                        }}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         type='text'
-                        placeholder='Nhập tên sách hoặc tên tác giả...'
+                        placeholder='Nhập tên sách hoặc tên tác giả, thể loại...'
                         className='w-auto rounded-l-md bg-white px-2 py-2 md:w-3xs lg:w-lg xl:w-xl'
                     />
-                    <button className='flex items-center justify-center rounded-r-md bg-[#0D5CB6] py-2.5 text-white lg:px-4'>
+
+                    <button
+                        onClick={handleSearch}
+                        className='flex cursor-pointer items-center justify-center rounded-r-md bg-[#0D5CB6] py-2.5 text-white lg:px-4'
+                    >
                         <SearchOutlined />
                         <span className='text-sm text-white'>Tìm kiếm</span>
                     </button>
