@@ -27,10 +27,3 @@ export interface IProduct {
     createdAt: string;
     updatedAt: string;
 }
-
-export interface PaginateResponse<T> {
-    data: T;
-    page: number;
-    totalDocs: number;
-    totalPages: number;
-}

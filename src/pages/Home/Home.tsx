@@ -18,7 +18,7 @@ export default function HomePage() {
         <div className='flex flex-col gap-[5%] md:flex-row xl:gap-[10%]'>
             <div>
                 <h3 className='whitespace-nowrap'>Danh mục sản phẩm</h3>
-                {categoryData && !isPending ? (
+                {categoryData && !categoryIsPending ? (
                     categoryData.data.length !== 0 ? (
                         <ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm md:flex-col md:gap-1'>
                             {categoryData?.data.map((item, index) => (
