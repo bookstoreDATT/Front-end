@@ -3,6 +3,7 @@ import { Drawer } from 'antd';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useFilter from '~/hooks/common/useFilter';
+import img from '~/assets/logo.png';
 
 export default function SidebarMobile({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
@@ -28,7 +29,7 @@ export default function SidebarMobile({ children }: { children: React.ReactNode 
             <Drawer
                 title={
                     <Link to={'/'}>
-                        <img className='w-16 invert-75' src='./public/logo.png' alt='' />
+                        <img className='w-16 invert-75' src={img} alt='' />
                     </Link>
                 }
                 placement={'left'}

@@ -1,7 +1,7 @@
 import ErrorPage from '~/pages/Error/ErrorPage';
 import NotFoundPage from '~/pages/NotFound/NotFound';
 import MainLayout from '../layouts/client/MainLayout';
-import { HomePage, SearchPage, Suspense } from './LazyRoutes';
+import { HomePage, ProductDetailPage, SearchPage, Suspense } from './LazyRoutes';
 import { Navigate } from 'react-router-dom';
 
 const PublicRoutes = [
@@ -23,6 +23,14 @@ const PublicRoutes = [
                 element: (
                     <Suspense>
                         <SearchPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/product/:id',
+                element: (
+                    <Suspense>
+                        <ProductDetailPage />
                     </Suspense>
                 ),
             },

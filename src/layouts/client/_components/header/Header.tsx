@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SidebarMobile from './_components/SidebarMobile';
 import { useState } from 'react';
 import useFilter from '~/hooks/common/useFilter';
+import img from '~/assets/logo.png';
 
 export default function Header() {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Header() {
                     <MenuOutlined className='text-2xl' />
                 </SidebarMobile>
                 <Link to={'/'}>
-                    <img className='w-16' src='./public/logo.png' alt='' />
+                    <img className='w-16' src={img} alt='' />
                 </Link>
                 <div className='hidden items-center justify-center md:flex'>
                     <input
