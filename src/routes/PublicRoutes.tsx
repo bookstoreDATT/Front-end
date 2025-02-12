@@ -1,6 +1,8 @@
 import ErrorPage from '~/pages/Error/ErrorPage';
+import NotFoundPage from '~/pages/NotFound/NotFound';
 import MainLayout from '../layouts/client/MainLayout';
 import { HomePage, SearchPage, Suspense } from './LazyRoutes';
+import { Navigate } from 'react-router-dom';
 
 const PublicRoutes = [
     {
@@ -25,6 +27,14 @@ const PublicRoutes = [
                 ),
             },
         ],
+    },
+    {
+        path: '*',
+        element: <Navigate to={'/404'} />,
+    },
+    {
+        path: '/404',
+        element: <NotFoundPage />,
     },
 ];
 

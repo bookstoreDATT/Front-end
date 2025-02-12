@@ -1,23 +1,26 @@
 import { ConfigProvider, Rate } from 'antd';
+import { Link } from 'react-router-dom';
 import { IProduct } from '~/interfaces/product';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 export default function ProductCard({ product }: { product: IProduct }) {
     return (
         <div className='group cursor-pointer'>
-            <div className='relative'>
-                <img
-                    className='h-auto w-auto rounded-md duration-300 group-hover:scale-105'
-                    src={product.thumbnail}
-                    alt=''
-                />
+            <div className='relative mb-2'>
+                <Link to={`/product/${product._id}`}>
+                    <img
+                        className='h-auto w-auto rounded-md duration-300 group-hover:scale-105'
+                        src={product.thumbnail}
+                        alt=''
+                    />
+                </Link>
                 <div className='absolute bottom-2 flex w-full justify-center opacity-0 duration-300 group-hover:opacity-100'>
                     <div className='rounded-md bg-white px-2 py-1 text-sm font-medium text-black opacity-80 hover:opacity-100'>
                         Thêm vào giỏ hàng
                     </div>
                 </div>
             </div>
-            <div className='mt-4 w-full'>
+            <Link to={`/product/${product._id}`} className='w-full'>
                 <h3
                     title={product.name}
                     className='truncate text-base font-medium capitalize duration-300 group-hover:opacity-70'
@@ -48,7 +51,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
                 ) : (
                     <p className='text-base font-medium'>{formatCurrency(product.price)}</p>
                 )}
-            </div>
+            </Link>
         </div>
     );
 }
