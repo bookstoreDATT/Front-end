@@ -1,9 +1,25 @@
 import { ConfigProvider, Rate } from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useAddCart from '~/hooks/mutations/cart/useAddCart';
 import { IProduct } from '~/interfaces/product';
+import { setCart } from '~/store/slice/cartSlice';
+import { useTypedSelector } from '~/store/store';
 import { formatCurrency } from '~/utils/formatCurrency';
 
 export default function ProductCard({ product }: { product: IProduct }) {
+    const { mutate, isPending } = useAddCart();
+    const dispatch = useDispatch();
+
+    const handleAddCart = () => {
+        if (!isPending) {
+            mutate({
+                productId: product._id,
+                quantity: 1,
+            });
+        }
+    };
+
     return (
         <div className='group cursor-pointer'>
             <div className='relative mb-2'>
@@ -15,7 +31,10 @@ export default function ProductCard({ product }: { product: IProduct }) {
                     />
                 </Link>
                 <div className='absolute bottom-2 flex w-full justify-center opacity-0 duration-300 group-hover:opacity-100'>
-                    <div className='rounded-md bg-white px-2 py-1 text-sm font-medium text-black opacity-80 hover:opacity-100'>
+                    <div
+                        className='rounded-md bg-white px-2 py-1 text-sm font-medium text-black opacity-80 hover:opacity-100'
+                        onClick={handleAddCart}
+                    >
                         Thêm vào giỏ hàng
                     </div>
                 </div>

@@ -1,10 +1,9 @@
 import { Spin } from 'antd';
-import ProductCard from '~/components/productCard/ProductCard';
+import ProductCard from '~/components/ProductCard/ProductCard';
 import { useGetRelatedProduct } from '~/hooks/queries/products/useGetRelatedProduct';
 import { IProduct } from '~/interfaces/product';
 
 export default function RelatedProducts({ product }: { product: IProduct }) {
-    console.log(product);
     const { data, isPending } = useGetRelatedProduct(product._id, product.categoryId._id);
     return (
         <div className='mt-4'>
