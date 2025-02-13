@@ -22,7 +22,7 @@ export const useLogin = () => {
                 email: data.data.email,
             };
             localStorage.setItem('user', JSON.stringify(user));
-            localStorage.setItem('accessToken', JSON.stringify(data.data.accessToken));
+            localStorage.setItem('accessToken', data.data.accessToken as string);
             navigate('/');
             dispatch(login(user));
         },

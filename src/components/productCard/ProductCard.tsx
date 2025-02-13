@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
             <div className='relative mb-2'>
                 <Link to={`/product/${product._id}`}>
                     <img
-                        className='h-auto w-auto rounded-md duration-300 group-hover:scale-105'
+                        className='max-h-[235px] min-h-[235px] w-auto rounded-md duration-300 group-hover:scale-105'
                         src={product.thumbnail}
                         alt=''
                     />

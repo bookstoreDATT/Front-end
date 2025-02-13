@@ -55,11 +55,13 @@ export default function Header() {
                 </div>
                 <div className='flex items-center gap-5'>
                     <div className='hidden items-center gap-2 text-white md:flex'>
-                        <UserOutlined className='text-3xl' />
+                        <Link to={`${user ? '/account/my-account' : '/auth/login'}`}>
+                            <UserOutlined className='text-3xl' />
+                        </Link>
                         <div className='min-w-[128px] text-sm'>
                             {user ? (
                                 <>
-                                    <p>{user.userName}</p>
+                                    <Link to={'/account/my-account'}>{user.userName}</Link>
                                     <p
                                         onClick={handleLogOut}
                                         className='cursor-pointer text-sm duration-300 hover:opacity-80'
@@ -78,7 +80,10 @@ export default function Header() {
                                             Đăng ký
                                         </Link>
                                     </p>
-                                    <Link className='text-sm duration-300 hover:opacity-80' to={'/'}>
+                                    <Link
+                                        className='text-sm duration-300 hover:opacity-80'
+                                        to={`${user ? '/account/my-account' : '/auth/login'}`}
+                                    >
                                         Tài khoản
                                     </Link>
                                 </>

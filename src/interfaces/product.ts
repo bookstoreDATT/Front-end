@@ -7,7 +7,14 @@ interface Tag {
     _id: string;
     name: string;
 }
-
+export interface IThumbnailAntd extends File {
+    uid: string;
+    originFileObj: File;
+}
+export type IProductFiles = {
+    file: IThumbnailAntd;
+    fileList: FileList;
+};
 export interface IProduct {
     _id: string;
     name: string;

@@ -11,6 +11,7 @@ export interface IUser {
     _id: string;
     userName: string;
     email: string;
+    avatar?: string;
     role: 'user' | 'admin';
     accessToken?: string;
 }
@@ -22,4 +23,9 @@ export interface IRegisterResponse {
     _id: string;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface IPayloadResetPassword {
+    newPassword: string;
+    oldPassword: string;
 }
