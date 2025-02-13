@@ -30,13 +30,6 @@ const CartDrawer = () => {
         dispatch(closeCart());
     };
 
-    // useEffect(() => {
-    //     console.log(data);
-    // }, [data]);
-    // useEffect(() => {
-    //     console.log('re-render');
-    // }, [data]);
-
     return (
         <>
             <Drawer title='Giỏ hàng' width={drawerWidth} onClose={handleCloseCart} open={open}>
@@ -47,7 +40,9 @@ const CartDrawer = () => {
                         </div>
                     )}
                     <div className='h-full pb-[140px]'>
-                        {!isPending && data && data.items.map((item, index) => <CartItem item={item} key={index} />)}
+                        {!isPending &&
+                            data &&
+                            data.items.map((item) => <CartItem item={item} key={item.productId._id + item.quantity} />)}
                         {/* {cartData?.map((item) => <CartItem item={item} key={item.productId._id} />)} */}
                     </div>
                     <div className='absolute right-0 bottom-0 left-0 border border-t border-black/10 bg-white'>

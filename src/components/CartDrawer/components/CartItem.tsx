@@ -12,15 +12,16 @@ type CartItemProps = {
 };
 
 const CartItem = ({ item }: CartItemProps) => {
-    const [debouncedQuantity, setdebounceQuantity] = useState(item.quantity);
+    const [debouncedQuantity, setDebounceQuantity] = useState<number | null>(null);
     const [quantity, setQuantity] = useState(item.quantity);
+
     const { mutate } = useUpdateCartQuantity();
     const { mutate: removeCartItem } = useRemoveCartItem();
 
     const handleDebouncedUpdateQuantity = useMemo(() => {
         return _.debounce((itemData) => {
             mutate(itemData);
-        }, 600);
+        }, 1000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -28,14 +29,14 @@ const CartItem = ({ item }: CartItemProps) => {
         const newQuantity = quantity - 1;
 
         setQuantity(newQuantity);
-        setdebounceQuantity(newQuantity);
+        setDebounceQuantity(newQuantity);
     };
 
     const handleIncreaseQuantity = () => {
         const newQuantity = quantity + 1;
 
         setQuantity(newQuantity);
-        setdebounceQuantity(newQuantity);
+        setDebounceQuantity(newQuantity);
     };
 
     const handleRemoveCartItem = () => {
@@ -46,11 +47,10 @@ const CartItem = ({ item }: CartItemProps) => {
         if (debouncedQuantity) {
             handleDebouncedUpdateQuantity({ productId: item.productId._id, quantity: debouncedQuantity });
         }
+        return () => {
+            handleDebouncedUpdateQuantity.cancel();
+        };
     }, [debouncedQuantity, handleDebouncedUpdateQuantity, item.productId._id]);
-
-    useEffect(() => {
-        setQuantity(item.quantity);
-    }, [item]);
 
     return (
         <>

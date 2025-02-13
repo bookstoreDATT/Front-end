@@ -1,18 +1,14 @@
-import { useMutation } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { cartService } from '~/services/cart.service';
-import { setCart } from '~/store/slice/cartSlice';
 
 const useUpdateCartQuantity = () => {
-    const dispatch = useDispatch();
+    const queryClient = useQueryClient();
 
     return useMutation({
         mutationKey: ['cart'],
         mutationFn: (itemData: { productId: string; quantity: number }) => cartService.updateCartQuantity(itemData),
-        onSuccess: (data) => {
-            const cartItems = data.data.items;
-
-            dispatch(setCart(cartItems));
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
         },
         onError(error) {
             console.log(error);
