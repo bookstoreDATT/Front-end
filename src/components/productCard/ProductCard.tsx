@@ -23,7 +23,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
     return (
         <div className='group cursor-pointer'>
             <div className='relative mb-2'>
-                <Link to={`/product/${product._id}`}>
+                <Link to={`/product/${product._id}`} className='flex justify-center'>
                     <img
                         className='max-h-[235px] min-h-[235px] w-auto rounded-md duration-300 group-hover:scale-105'
                         src={product.thumbnail}
