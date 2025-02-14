@@ -29,6 +29,10 @@ export default function SidebarMobile({ children }: { children: React.ReactNode 
     const handleLogOut = () => {
         dispatch(logout());
     };
+    const handleNavigateProfile = () => {
+        setOpen(false);
+        navigate('/account/my-account');
+    };
     return (
         <>
             <button onClick={showDrawer} className='block text-white md:hidden'>
@@ -73,9 +77,13 @@ export default function SidebarMobile({ children }: { children: React.ReactNode 
                         {user ? (
                             <>
                                 <li>
-                                    <Link style={{ color: 'black' }} className='duration-300 hover:opacity-80' to={'/'}>
+                                    <p
+                                        style={{ color: 'black' }}
+                                        className='duration-300 hover:opacity-80'
+                                        onClick={handleNavigateProfile}
+                                    >
                                         {user.userName}
-                                    </Link>
+                                    </p>
                                 </li>
                                 <li className=''>
                                     <p
