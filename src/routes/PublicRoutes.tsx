@@ -4,6 +4,7 @@ import MainLayout from '../layouts/client/MainLayout';
 import { HomePage, LoginPage, ProductDetailPage, RegisterPage, SearchPage, Suspense } from './LazyRoutes';
 import { Navigate } from 'react-router-dom';
 import AuthLayout from '~/layouts/auth/AuthLayout';
+import CartDetail from '~/pages/Cart/CartDetail';
 
 const PublicRoutes = [
     {
@@ -29,6 +30,22 @@ const PublicRoutes = [
             },
             {
                 path: '/product/:id',
+                element: (
+                    <Suspense>
+                        <ProductDetailPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/cart/detail',
+                element: (
+                    <Suspense>
+                        <CartDetail />
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/order',
                 element: (
                     <Suspense>
                         <ProductDetailPage />

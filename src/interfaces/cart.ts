@@ -4,6 +4,7 @@ export interface ICartItem {
         name?: string;
         _id: string;
         stock: number;
+        price: number;
     };
     quantity: number;
 }

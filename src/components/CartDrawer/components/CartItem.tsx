@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import useRemoveCartItem from '~/hooks/mutations/cart/useRemoveCartItem';
 import useUpdateCartQuantity from '~/hooks/mutations/cart/useUpdateCartQuantity';
 import { ICartItem } from '~/interfaces/cart';
+import { formatCurrency } from '~/utils/formatCurrency';
 
 type CartItemProps = {
     item: ICartItem;
@@ -21,7 +22,7 @@ const CartItem = ({ item }: CartItemProps) => {
     const handleDebouncedUpdateQuantity = useMemo(() => {
         return _.debounce((itemData) => {
             mutate(itemData);
-        }, 1000);
+        }, 800);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -61,8 +62,11 @@ const CartItem = ({ item }: CartItemProps) => {
                         <img src={item.productId.thumbnail} alt='hehe' className='w-12' />
                     </Link>
                     <div className='ml-3'>
-                        <div className='text-base font-medium sm:mr-4 lg:mr-2'>
+                        <div className='text-base font-medium sm:mr-5 lg:mr-4'>
                             <span className='text-sm font-medium'>{item.productId.name}</span>
+                        </div>
+                        <div className='text-base font-medium'>
+                            <span className='text-sm'>{formatCurrency(item.productId.price)}</span>
                         </div>
                         <div>
                             <div className='mt-2 flex items-center'>

@@ -24,12 +24,13 @@ export default function ProductDetail() {
 
     const handleDecreaseQuantity = () => {
         const newQuantity = quantity - 1;
-
+        console.log(newQuantity);
         setQuantity(newQuantity);
     };
 
     const handleIncreaseQuantity = () => {
         const newQuantity = quantity + 1;
+        console.log(newQuantity);
 
         setQuantity(newQuantity);
     };

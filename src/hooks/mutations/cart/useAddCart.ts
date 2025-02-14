@@ -29,9 +29,7 @@ const useAddCart = () => {
 
             dispatch(openCart());
 
-            setTimeout(() => {
-                queryClient.invalidateQueries({ queryKey: ['cart'] });
-            }, 0);
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
 
             // console.log(data);
 

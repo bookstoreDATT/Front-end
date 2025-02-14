@@ -12,7 +12,7 @@ export const cartService = {
         return data;
     },
     async updateCartQuantity(itemData: { productId: string; quantity: number }) {
-        const { data } = await instance.post<PaginateResponse<ICartResponse>>('/cart/update', itemData);
+        const { data } = await instance.post<ICartResponse>('/cart/update', itemData);
         return data;
     },
     async removeCartItem(itemData: { productId: string }) {
