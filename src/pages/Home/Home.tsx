@@ -1,7 +1,7 @@
 import { Pagination, Spin } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ProductCard from '~/components/productCard/ProductCard';
+import ProductCard from '~/components/ProductCard/ProductCard';
 import useFilter from '~/hooks/common/useFilter';
 import { useGetAllCategory } from '~/hooks/queries/category/useGetAllCategory';
 import { useGetAllProducts } from '~/hooks/queries/products/useGetAllProducts';
@@ -14,6 +14,7 @@ export default function HomePage() {
         updateQueryParam({ ...query, page: page.toString(), limit: String(limit) });
     };
     const { data: categoryData, isPending: categoryIsPending } = useGetAllCategory();
+
     return (
         <div className='flex flex-col gap-[5%] md:flex-row xl:gap-[10%]'>
             <div>

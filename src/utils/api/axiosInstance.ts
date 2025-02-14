@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Params } from 'react-router-dom';
 import queryString from 'query-string';
 import { envProcess } from '~/constants/env';
-import { getAccessToken } from './apiHelper';
+import { getAccessToken } from './apiHelpers';
 
 const axiosOptions = {
     baseURL: envProcess.api,

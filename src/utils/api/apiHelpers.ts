@@ -1,4 +1,15 @@
-import { IUser } from '~/interfaces/auth';
+export const getContentType = () => ({
+    'Content-Type': 'application/json',
+});
+export type IUser = {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    phone: string;
+    createdAt: string;
+    updatedAt: string;
+};
 
 export const getAccessToken = () => {
     return localStorage.getItem('accessToken');

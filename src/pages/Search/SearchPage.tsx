@@ -1,7 +1,7 @@
 import { LeftOutlined } from '@ant-design/icons';
 import { Pagination, Spin } from 'antd';
 import { Link } from 'react-router-dom';
-import ProductCard from '~/components/productCard/ProductCard';
+import ProductCard from '~/components/ProductCard/ProductCard';
 import useFilter from '~/hooks/common/useFilter';
 import { useGetAllProducts } from '~/hooks/queries/products/useGetAllProducts';
 

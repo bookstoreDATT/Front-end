@@ -1,27 +1,42 @@
 import { MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import SidebarMobile from './_components/SidebarMobile';
-import { useState } from 'react';
-import useFilter from '~/hooks/common/useFilter';
-import img from '~/assets/logo.png';
-import { useTypedSelector } from '~/store/store';
-import { logout } from '~/store/slice/authSlice';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import img from '~/assets/logo.png';
+import CartDrawer from '~/components/CartDrawer/CartDrawer';
+import useFilter from '~/hooks/common/useFilter';
+import { logout } from '~/store/slice/authSlice';
+import { closeCart, openCart } from '~/store/slice/cartSlice';
+import { useTypedSelector } from '~/store/store';
+import SidebarMobile from './_components/SidebarMobile';
 
 export default function Header() {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState<string>('');
     const { query, updateQueryParam } = useFilter();
+    const dispatch = useDispatch();
+
     const handleSearch = () => {
         updateQueryParam({ ...query, search: searchQuery, page: '1', limit: '10' });
         navigate(`/search?search=${searchQuery}&page=1&limit=10`);
     };
     const user = useTypedSelector((state) => state.auth.user);
-    const dispatch = useDispatch();
+
     const handleLogOut = () => {
         dispatch(logout());
     };
+
+    const handleOpenCart = () => {
+        dispatch(openCart());
+    };
+
+    useEffect(() => {
+        return () => {
+            dispatch(closeCart());
+        };
+    }, []);
+
     return (
         <header className='h-16 bg-[#1A94FF]'>
             <div className='mx-6 flex max-w-[1240px] items-center justify-between pt-2 md:justify-between xl:mx-auto'>
@@ -92,7 +107,7 @@ export default function Header() {
                     </div>
                     <div className='flex items-center gap-2 text-sm text-white'>
                         {user ? (
-                            <Badge count={5} offset={[0, 2]}>
+                            <Badge count={5} offset={[0, 2]} onClick={handleOpenCart}>
                                 <div className='text-white'>
                                     <ShoppingCartOutlined color='#fff' className='text-3xl' />
                                 </div>
@@ -102,10 +117,12 @@ export default function Header() {
                                 <ShoppingCartOutlined color='#fff' className='text-3xl' />
                             </div>
                         )}
+
                         <p className='hidden md:block'>Giỏ hàng</p>
                     </div>
                 </div>
             </div>
+            <CartDrawer />
         </header>
     );
 }

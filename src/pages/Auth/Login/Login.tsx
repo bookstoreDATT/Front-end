@@ -18,7 +18,6 @@ export default function Login() {
     });
 
     const onSubmit = (values: LoginFormType) => {
-        console.log(values);
         const payload = {
             email: values.email,
             password: values.password,

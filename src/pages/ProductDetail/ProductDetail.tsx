@@ -5,12 +5,42 @@ import { useGetDetailProduct } from '~/hooks/queries/products/useGetDetailProduc
 import { calculateOriginPrice, formatCurrency } from '~/utils/formatCurrency';
 import SlideShow from './_components/SlideShow';
 import RelatedProducts from './_components/RelatedProducts';
+import useAddCart from '~/hooks/mutations/cart/useAddCart';
+import { useState } from 'react';
 
 export default function ProductDetail() {
     const { id } = useParams();
     const { data: product } = useGetDetailProduct(id as string);
     const originalPrice =
         product && product.discount !== 0 ? calculateOriginPrice(product.price, product.discount) : null;
+    const [quantity, setQuantity] = useState(1);
+    const { mutate, isPending } = useAddCart();
+
+    const handleAddToCart = () => {
+        if (id) {
+            mutate({ productId: id!, quantity: quantity });
+        }
+    };
+
+    const handleDecreaseQuantity = () => {
+        const newQuantity = quantity - 1;
+
+        setQuantity(newQuantity);
+    };
+
+    const handleIncreaseQuantity = () => {
+        const newQuantity = quantity + 1;
+
+        setQuantity(newQuantity);
+    };
+
+    const handleChangeQuantity = (quantityValue: number | null) => {
+        if (quantityValue && product && quantityValue > product?.stock) {
+            setQuantity(product?.stock);
+        } else {
+            setQuantity(quantityValue as number);
+        }
+    };
     return (
         <div>
             {product && (
@@ -61,14 +91,31 @@ export default function ProductDetail() {
                             <div className='mt-12'>
                                 <span>Số lượng</span>
                                 <div className='my-2 flex items-center gap-2'>
-                                    <Button className='h-full'>-</Button>
-                                    <InputNumber min={1} value={1} className='flex items-center' controls={false} />
-                                    <Button className=''>+</Button>
+                                    <Button className='h-full' disabled={quantity < 2} onClick={handleDecreaseQuantity}>
+                                        -
+                                    </Button>
+                                    <InputNumber
+                                        min={1}
+                                        value={quantity}
+                                        className='flex items-center'
+                                        onChange={handleChangeQuantity}
+                                        controls={false}
+                                    />
+                                    <Button
+                                        className=''
+                                        disabled={quantity === product.stock}
+                                        onClick={handleIncreaseQuantity}
+                                    >
+                                        +
+                                    </Button>
                                 </div>
                                 <span className='text-sm text-[#808089]'>Còn lại {product.stock} sản phẩm</span>
                             </div>
                             <div className='mt-8'>
-                                <button className='w-full cursor-pointer rounded-md border-[1px] border-[#1a94ff] bg-[#f1f0ff] py-4 font-medium text-[#1a94ff] duration-300 hover:bg-[#1a94ff] hover:text-white'>
+                                <button
+                                    onClick={handleAddToCart}
+                                    className='w-full cursor-pointer rounded-md border-[1px] border-[#1a94ff] bg-[#f1f0ff] py-4 font-medium text-[#1a94ff] duration-300 hover:bg-[#1a94ff] hover:text-white'
+                                >
                                     Thêm vào giỏ hàng
                                 </button>
                             </div>
