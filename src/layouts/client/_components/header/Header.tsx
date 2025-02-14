@@ -22,7 +22,7 @@ export default function Header() {
         navigate(`/search?search=${searchQuery}&page=1&limit=10`);
     };
     const user = useTypedSelector((state) => state.auth.user);
-
+    const cartQuantity = useTypedSelector((state) => state.cart.quantityInCart);
     const handleLogOut = () => {
         dispatch(logout());
     };
@@ -35,6 +35,7 @@ export default function Header() {
         return () => {
             dispatch(closeCart());
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -107,7 +108,13 @@ export default function Header() {
                     </div>
                     <div className='flex items-center gap-2 text-sm text-white'>
                         {user ? (
-                            <Badge count={5} offset={[0, 2]} onClick={handleOpenCart}>
+                            <Badge
+                                className='cursor-pointer'
+                                count={cartQuantity}
+                                showZero
+                                offset={[0, 2]}
+                                onClick={handleOpenCart}
+                            >
                                 <div className='text-white'>
                                     <ShoppingCartOutlined color='#fff' className='text-3xl' />
                                 </div>

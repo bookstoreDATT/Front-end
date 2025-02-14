@@ -21,7 +21,7 @@ const CartItem = ({ item }: CartItemProps) => {
     const handleDebouncedUpdateQuantity = useMemo(() => {
         return _.debounce((itemData) => {
             mutate(itemData);
-        }, 1000);
+        }, 500);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -47,9 +47,9 @@ const CartItem = ({ item }: CartItemProps) => {
         if (debouncedQuantity) {
             handleDebouncedUpdateQuantity({ productId: item.productId._id, quantity: debouncedQuantity });
         }
-        return () => {
-            handleDebouncedUpdateQuantity.cancel();
-        };
+        // return () => {
+        //     handleDebouncedUpdateQuantity.cancel();
+        // };
     }, [debouncedQuantity, handleDebouncedUpdateQuantity, item.productId._id]);
 
     return (

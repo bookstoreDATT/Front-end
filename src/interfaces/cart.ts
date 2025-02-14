@@ -15,6 +15,7 @@ export interface ICartData {
 export interface ICart {
     items: ICartItem[];
     open: boolean;
+    quantityInCart: number;
 }
 
 export interface ICartResponse {
