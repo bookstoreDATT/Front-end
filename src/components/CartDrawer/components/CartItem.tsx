@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import useRemoveCartItem from '~/hooks/mutations/cart/useRemoveCartItem';
 import useUpdateCartQuantity from '~/hooks/mutations/cart/useUpdateCartQuantity';
 import { ICartItem } from '~/interfaces/cart';
+import RemoveCartItem from '~/pages/Cart/components/DeleteCartItem';
 
 type CartItemProps = {
     item: ICartItem;
@@ -47,9 +48,6 @@ const CartItem = ({ item }: CartItemProps) => {
         if (debouncedQuantity) {
             handleDebouncedUpdateQuantity({ productId: item.productId._id, quantity: debouncedQuantity });
         }
-        // return () => {
-        //     handleDebouncedUpdateQuantity.cancel();
-        // };
     }, [debouncedQuantity, handleDebouncedUpdateQuantity, item.productId._id]);
 
     return (
@@ -98,10 +96,7 @@ const CartItem = ({ item }: CartItemProps) => {
                     </div>
                 </div>
                 <div className='text-white' onClick={handleRemoveCartItem}>
-                    <DeleteOutlined
-                        color='#fff'
-                        className='absolute top-0 right-0 cursor-pointer rounded-full bg-red-400 p-1 text-base text-white'
-                    />
+                    <RemoveCartItem productId={item.productId._id} />
                 </div>
             </div>
         </>

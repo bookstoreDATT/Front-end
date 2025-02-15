@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom';
 import AuthLayout from '~/layouts/auth/AuthLayout';
 import AccountLayout from '~/layouts/account/AccountLayout';
 import AuthProtected from '~/layouts/protected/AuthProtected';
+import CartDetail from '~/pages/Cart/CartDetail';
 
 const PublicRoutes = [
     {
@@ -34,6 +35,14 @@ const PublicRoutes = [
                 element: (
                     <Suspense>
                         <ProductDetailPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/cart/detail',
+                element: (
+                    <Suspense>
+                        <CartDetail />
                     </Suspense>
                 ),
             },
