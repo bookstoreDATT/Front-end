@@ -3,18 +3,22 @@ import { Navigate } from 'react-router-dom';
 import { useTypedSelector } from '~/store/store';
 
 export default function AuthProtected({
-    pageType,
     children,
+    protectedType,
 }: {
-    pageType: 'account' | 'auth';
+    // pageType: 'account' | 'auth' | 'order';
     children: React.ReactNode;
+    protectedType: 'logged' | 'not-logged';
 }) {
     const user = useTypedSelector((state) => state.auth.user);
-    if (pageType === 'auth' && user) {
+    const cartItems = useTypedSelector((state) => state.cart.items);
+
+    if (protectedType === 'logged' && user && cartItems.length === 0) {
         return <Navigate to={'/'} />;
     }
-    if (pageType === 'account' && !user) {
+    if (protectedType === 'not-logged' && !user) {
         return <Navigate to={'/auth/login'} />;
     }
+
     return <>{children}</>;
 }

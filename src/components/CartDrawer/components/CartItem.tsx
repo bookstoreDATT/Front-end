@@ -7,6 +7,7 @@ import useRemoveCartItem from '~/hooks/mutations/cart/useRemoveCartItem';
 import useUpdateCartQuantity from '~/hooks/mutations/cart/useUpdateCartQuantity';
 import { ICartItem } from '~/interfaces/cart';
 import RemoveCartItem from '~/pages/Cart/components/DeleteCartItem';
+import { formatCurrency } from '~/utils/formatCurrency';
 
 type CartItemProps = {
     item: ICartItem;
@@ -40,10 +41,6 @@ const CartItem = ({ item }: CartItemProps) => {
         setDebounceQuantity(newQuantity);
     };
 
-    const handleRemoveCartItem = () => {
-        removeCartItem({ productId: item.productId._id });
-    };
-
     useEffect(() => {
         if (debouncedQuantity) {
             handleDebouncedUpdateQuantity({ productId: item.productId._id, quantity: debouncedQuantity });
@@ -52,16 +49,23 @@ const CartItem = ({ item }: CartItemProps) => {
 
     return (
         <>
-            <div className='relative mt-3'>
+            <div className='mt-3'>
                 <div className='flex items-center gap-3'>
                     <Link to={`/product/${item.productId._id}`}>
                         {' '}
                         <img src={item.productId.thumbnail} alt='hehe' className='w-12' />
                     </Link>
                     <div className='ml-3'>
-                        <div className='text-base font-medium sm:mr-4 lg:mr-2'>
-                            <span className='text-sm font-medium'>{item.productId.name}</span>
+                        <div className='flex justify-between gap-8'>
+                            <div className='text-base font-medium'>
+                                <span className='text-sm font-medium'>{item.productId.name}</span>
+                            </div>
+                            <div className='flex h-7 w-7 items-center justify-center rounded-full bg-red-500 text-white'>
+                                <RemoveCartItem productId={item.productId._id} />
+                            </div>
                         </div>
+                        <span className='my-2 text-sm font-medium'>{formatCurrency(item.productId.price)}</span>
+
                         <div>
                             <div className='mt-2 flex items-center'>
                                 <Button
@@ -94,9 +98,6 @@ const CartItem = ({ item }: CartItemProps) => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='text-white' onClick={handleRemoveCartItem}>
-                    <RemoveCartItem productId={item.productId._id} />
                 </div>
             </div>
         </>

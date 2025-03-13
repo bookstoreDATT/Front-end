@@ -12,6 +12,7 @@ export interface IUser {
     userName: string;
     email: string;
     avatar?: string;
+    phone: string;
     role: 'user' | 'admin';
     accessToken?: string;
 }

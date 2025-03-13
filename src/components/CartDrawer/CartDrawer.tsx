@@ -54,9 +54,9 @@ const CartDrawer = () => {
                     <div className='h-full pb-[140px]'>
                         {!isPending &&
                             cartList &&
-                            cartList.items.map((item) => (
-                                <CartItem item={item} key={`${item.productId._id} - ${item.quantity}`} />
-                            ))}
+                            cartList.items.map((item) => {
+                                return <CartItem item={item} key={`${item.productId._id} - ${item.quantity}`} />;
+                            })}
                         {/* {cartData?.map((item) => <CartItem item={item} key={item.productId._id} />)} */}
                     </div>
                     <div className='absolute right-0 bottom-0 left-0 border border-t border-black/10 bg-white'>
@@ -64,7 +64,7 @@ const CartDrawer = () => {
                             {!isEmpty && (
                                 <Link to='/cart/detail' onClick={() => dispatch(closeCart())}>
                                     <div className='block cursor-pointer rounded-md border border-blue-500 bg-blue-500 px-2 py-2 text-center text-white hover:opacity-90'>
-                                        Thanh toán
+                                        Chi tiết giỏ hàng
                                     </div>
                                 </Link>
                             )}

@@ -1,12 +1,25 @@
+import { Navigate } from 'react-router-dom';
+import AccountLayout from '~/layouts/account/AccountLayout';
+import AuthLayout from '~/layouts/auth/AuthLayout';
+import AuthProtected from '~/layouts/protected/AuthProtected';
 import ErrorPage from '~/pages/Error/ErrorPage';
 import NotFoundPage from '~/pages/NotFound/NotFound';
 import MainLayout from '../layouts/client/MainLayout';
-import { AccountPage, HomePage, LoginPage, ProductDetailPage, RegisterPage, SearchPage, Suspense } from './LazyRoutes';
-import { Navigate } from 'react-router-dom';
-import AuthLayout from '~/layouts/auth/AuthLayout';
-import AccountLayout from '~/layouts/account/AccountLayout';
-import AuthProtected from '~/layouts/protected/AuthProtected';
-import CartDetail from '~/pages/Cart/CartDetail';
+import {
+    AccountPage,
+    CartDetail,
+    Checkout,
+    HomePage,
+    LoginPage,
+    MyOrderDetailPage,
+    MyOrdersPage,
+    OrderError,
+    OrderSuccess,
+    ProductDetailPage,
+    RegisterPage,
+    SearchPage,
+    Suspense,
+} from './LazyRoutes';
 
 const PublicRoutes = [
     {
@@ -42,7 +55,39 @@ const PublicRoutes = [
                 path: '/cart/detail',
                 element: (
                     <Suspense>
-                        <CartDetail />
+                        <AuthProtected protectedType='not-logged'>
+                            <CartDetail />
+                        </AuthProtected>
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/checkout',
+                element: (
+                    <Suspense>
+                        <AuthProtected protectedType='logged'>
+                            <Checkout />
+                        </AuthProtected>
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/order-success',
+                element: (
+                    <Suspense>
+                        <AuthProtected protectedType='not-logged'>
+                            <OrderSuccess />
+                        </AuthProtected>
+                    </Suspense>
+                ),
+            },
+            {
+                path: '/order-error',
+                element: (
+                    <Suspense>
+                        <AuthProtected protectedType='not-logged'>
+                            <OrderError />
+                        </AuthProtected>
                     </Suspense>
                 ),
             },
@@ -50,7 +95,7 @@ const PublicRoutes = [
             {
                 path: '/account/',
                 element: (
-                    <AuthProtected pageType='account'>
+                    <AuthProtected protectedType='not-logged'>
                         <AccountLayout />
                     </AuthProtected>
                 ),
@@ -64,6 +109,22 @@ const PublicRoutes = [
                             </Suspense>
                         ),
                     },
+                    {
+                        path: 'my-orders',
+                        element: (
+                            <Suspense>
+                                <MyOrdersPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'my-orders/:id',
+                        element: (
+                            <Suspense>
+                                <MyOrderDetailPage />
+                            </Suspense>
+                        ),
+                    },
                 ],
             },
         ],
@@ -71,7 +132,7 @@ const PublicRoutes = [
     {
         path: '/auth/',
         element: (
-            <AuthProtected pageType='auth'>
+            <AuthProtected protectedType='logged'>
                 <AuthLayout />
             </AuthProtected>
         ),

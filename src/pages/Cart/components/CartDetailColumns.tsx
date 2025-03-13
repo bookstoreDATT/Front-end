@@ -17,7 +17,7 @@ export const columns: TableProps<CartTableType>['columns'] = [
         title: 'Sản phẩm',
         dataIndex: 'product',
         key: 'product',
-        render: (_, record, index) => {
+        render: (_, record) => {
             return (
                 <div className='flex gap-10'>
                     <div className='w-16 min-w-10 rounded-md border border-black/50 p-2'>
@@ -38,6 +38,12 @@ export const columns: TableProps<CartTableType>['columns'] = [
         render: (_, record) => (
             <CartDetailQuantityItem productId={record.productId} quantityValue={record.quantity} stock={record.stock} />
         ),
+    },
+    {
+        title: 'Đơn giá',
+        dataIndex: 'quantity',
+        key: 'quantity',
+        render: (_, record) => <span className='font-medium'>{formatCurrency(record.price)}</span>,
     },
     {
         title: 'Tổng',

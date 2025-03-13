@@ -7,6 +7,7 @@ import SlideShow from './_components/SlideShow';
 import RelatedProducts from './_components/RelatedProducts';
 import useAddCart from '~/hooks/mutations/cart/useAddCart';
 import { useState } from 'react';
+import ProductReviews from './_components/ProductReviews';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -120,6 +121,9 @@ export default function ProductDetail() {
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div className='mt-12'>
+                        <ProductReviews />
                     </div>
                     <div className='mt-12'>
                         <h3 className='text-xl font-medium'>Sản phẩm tương tự</h3>
