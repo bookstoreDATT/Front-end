@@ -18,6 +18,7 @@ export default function CardPaymentModal({
 }) {
     const { mutate, isPending } = useCreatePayosOrder();
     const checkOutInfor = useTypedSelector((state) => state.checkout.checkoutInfor);
+    const shippingFee = 30000;
 
     const handleCancel = () => {
         setOpen(false);
@@ -33,6 +34,7 @@ export default function CardPaymentModal({
             cancelUrl: 'http://localhost:3000/order-error',
             returnUrl: 'http://localhost:3000/order-success',
             amount: checkOutInfor.totalPrice,
+            shippingFee,
         };
         mutate(payload);
     };

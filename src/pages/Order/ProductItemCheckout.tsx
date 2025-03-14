@@ -20,6 +20,7 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
     const [isOpen, setOpen] = useState(false);
     const [isPayosOpen, sePayostOpen] = useState(false);
     const checkoutInfor = useTypedSelector((state) => state.checkout.checkoutInfor);
+    const shippingFee = 30000;
     const dispatch = useDispatch();
 
     const onchangeRadioPayment = (e: RadioChangeEvent) => {
@@ -81,7 +82,7 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
                 <Space direction='vertical' className='w-full'>
                     <div className='flex justify-between'>
                         <Text>Tạm tính:</Text>
-                        <Text>{formatCurrency(checkoutInfor.totalPrice)}</Text>
+                        <Text>{formatCurrency(checkoutInfor.totalPrice + shippingFee)}</Text>
                     </div>
                     <div className='mt-2'>
                         <h3 className='text-lg font-semibold'>Phương thức thanh toán</h3>
@@ -99,7 +100,7 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
                     <Row justify='space-between' align='middle'>
                         <h3 className='text-2xl font-semibold'>Tổng cộng:</h3>
                         <h3 className='text-2xl font-semibold text-red-500'>
-                            {formatCurrency(checkoutInfor.totalPrice)}
+                            {formatCurrency(checkoutInfor.totalPrice + shippingFee)}
                         </h3>
                     </Row>
                 </Space>

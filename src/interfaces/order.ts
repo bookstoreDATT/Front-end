@@ -21,6 +21,7 @@ export interface IOrderCreatePayload {
     totalPrice: number;
     description?: string;
     paymentMethod: string;
+    shippingFee: number;
 }
 
 export interface IOrder {

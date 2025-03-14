@@ -13,13 +13,17 @@ import {
     LoginPage,
     MyOrderDetailPage,
     MyOrdersPage,
+    OrderDetailPage,
     OrderError,
+    OrdersListPage,
     OrderSuccess,
     ProductDetailPage,
     RegisterPage,
     SearchPage,
     Suspense,
 } from './LazyRoutes';
+import AdminLayout from '~/layouts/AdminLayout';
+import ProtectedRoute from '~/layouts/protected/ProtectedRoute';
 
 const PublicRoutes = [
     {
@@ -153,6 +157,83 @@ const PublicRoutes = [
                         <LoginPage />
                     </Suspense>
                 ),
+            },
+        ],
+    },
+    {
+        path: 'admin',
+        element: (
+            <ProtectedRoute>
+                <AdminLayout />
+            </ProtectedRoute>
+        ),
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: '',
+                element: (
+                    <Suspense>
+                        <div>DashBoard</div>
+                    </Suspense>
+                ),
+            },
+            {
+                path: 'orders',
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <OrdersListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <OrdersListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ':id/detail',
+                        element: (
+                            <Suspense>
+                                <OrderDetailPage />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            {
+                path: 'products',
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <div>Product List</div>
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <div>Product List</div>
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <div>Create Product</div>
+                            </Suspense>
+                        ),
+                    },
+                ],
             },
         ],
     },

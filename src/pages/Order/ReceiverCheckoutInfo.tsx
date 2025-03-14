@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useGetProfile } from '~/hooks/queries/auth/useGetProfile';
 import { setCheckoutInfo } from '~/store/slice/checkoutSlice';
 import { useTypedSelector } from '~/store/store';
+import { formatCurrency } from '~/utils/formatCurrency';
 
 const { Title } = Typography;
 
@@ -23,6 +24,7 @@ const ReceiverCheckoutInfo: React.FC<{ setIsAdressEmpty: (value: boolean) => voi
     const dispatch = useDispatch();
     const checkoutInfor = useTypedSelector((state) => state.checkout);
     const cartItems = useTypedSelector((state) => state.cart.items);
+    const shippingFee = 30000;
 
     const handleFieldsChange = (_: FieldType, allValues: FieldType) => {
         if (allValues.address.length === 0) {
@@ -59,6 +61,8 @@ const ReceiverCheckoutInfo: React.FC<{ setIsAdressEmpty: (value: boolean) => voi
                         name: item.productId.name as string,
                         image: item.productId.thumbnail as string,
                         price: item.productId.price,
+                        isReviewDisabled: false,
+                        isReviewed: false,
                     })),
                     totalPrice: cartItems.reduce((acc, curr) => acc + curr.quantity * curr.productId.price, 0),
                 })
@@ -113,6 +117,9 @@ const ReceiverCheckoutInfo: React.FC<{ setIsAdressEmpty: (value: boolean) => voi
                 bordered
                 column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
             >
+                <Descriptions.Item label='Phí vận chuyển'>
+                    <Tag color='orange'>{formatCurrency(shippingFee)}</Tag>
+                </Descriptions.Item>
                 <Descriptions.Item label='Thời gian giao hàng dự kiến'>
                     <Tag color='orange'>3-5 ngày từ khi admin xác nhận đơn hàng</Tag>
                 </Descriptions.Item>

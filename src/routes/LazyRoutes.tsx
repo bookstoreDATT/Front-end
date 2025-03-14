@@ -14,6 +14,11 @@ export const MyOrderDetailPage = lazy(() => import('~/pages/account/MyOrders/Ord
 export const OrderSuccess = lazy(() => import('~/pages/Order/OrderSuccessPage'));
 export const OrderError = lazy(() => import('~/pages/Order/OrderError'));
 
+// Admin
+
+export const OrdersListPage = lazy(() => import('~/pages/admin/_order_/ManageOrder'));
+export const OrderDetailPage = lazy(() => import('~/pages/admin/_order_/OrderDetails'));
+
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>Loading</div>}>{children}</React.Suspense>;
 };

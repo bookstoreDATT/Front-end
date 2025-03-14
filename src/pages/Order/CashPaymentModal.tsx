@@ -17,6 +17,7 @@ export default function CashPaymentModal({
 }) {
     const { mutate, isPending } = useCreateCodOrder();
     const checkOutInfor = useTypedSelector((state) => state.checkout.checkoutInfor);
+    const shippingFee = 30000;
 
     const handleCancel = () => {
         setOpen(false);
@@ -29,6 +30,7 @@ export default function CashPaymentModal({
             totalPrice: checkOutInfor.totalPrice,
             description: checkOutInfor.description,
             paymentMethod: checkOutInfor.paymentMethod,
+            shippingFee,
         };
         mutate(payload);
     };

@@ -25,4 +25,34 @@ export const orderService = {
         const { data } = await instance.patch<null>(`/payos/update/${orderCode}`);
         return data;
     },
+    confirmOrder({ orderId, reason }: { orderId?: string; reason?: string }) {
+        return instance.patch<void, { orderId?: string; reason?: string }>(`order/confirm`, {
+            orderId,
+            reason,
+        });
+    },
+    shippingOrder({ orderId, reason }: { orderId?: string; reason?: string }) {
+        return instance.patch<void, { orderId: string; reason: string }>(`order/shipping`, {
+            orderId,
+            reason,
+        });
+    },
+    deliveredOrder({ orderId, reason }: { orderId?: string; reason?: string }) {
+        return instance.patch<void, { orderId: string; reason: string }>(`order/delivered`, {
+            orderId,
+            reason,
+        });
+    },
+
+    finishOrder(id: string) {
+        return instance.patch<void, { orderId: string }>(`order/finish`, {
+            orderId: id,
+        });
+    },
+
+    finishOrderClient(id: string) {
+        return instance.patch<void, string>(`order/finish`, {
+            orderId: id,
+        });
+    },
 };

@@ -1,6 +1,7 @@
 import { LoginOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
+import { Role } from '~/constants/enum';
 import { useToast } from '~/context/ToastProvider';
 import { logout } from '~/store/slice/authSlice';
 import { useTypedSelector } from '~/store/store';
@@ -55,6 +56,23 @@ export default function AccountLayout() {
                                 </NavLink>
                             </p>
                         </li>
+                        {user?.role === Role.ADMIN && (
+                            <li className='w-full'>
+                                <p>
+                                    <NavLink
+                                        to='/admin'
+                                        className={({ isActive }) => {
+                                            const classActive = isActive
+                                                ? 'border-[1px] border-[#1a94ff] bg-[#f1f0ff] font-medium text-[#1a94ff]'
+                                                : 'hover:opacity-80';
+                                            return `rounded-sm border p-2 transition-transform duration-150 ease-in-out ${classActive} flex justify-between`;
+                                        }}
+                                    >
+                                        <span>Quản trị</span>
+                                    </NavLink>
+                                </p>
+                            </li>
+                        )}
                         <li>
                             <button
                                 onClick={handleLogout}

@@ -29,7 +29,7 @@ export default function OrderSuccess() {
                 extra={[
                     <Button
                         onClick={() => {
-                            navigate('/account', { replace: true });
+                            navigate('/account/my-orders', { replace: true });
                         }}
                         type='primary'
                         key='home'

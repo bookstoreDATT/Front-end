@@ -34,6 +34,9 @@ const TableDisplay = <T extends object>({
                 columns={columns}
                 dataSource={dataSource}
                 pagination={false}
+                scroll={{
+                    x: 'horizontal',
+                }}
             />
             <div className='my-2 flex w-full justify-center'>
                 <Pagination
