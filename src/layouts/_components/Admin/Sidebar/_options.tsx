@@ -22,7 +22,7 @@ export const menuGroups: IMenuItem[] = [
         label: 'Quản lý sản phẩm',
         children: [
             { label: 'Tất cả sản phẩm', route: '/admin/products' },
-            { label: 'Tạo mới sản phẩm', route: '/admin/create' },
+            { label: 'Tạo mới sản phẩm', route: '/admin/products/create' },
         ],
     },
     {

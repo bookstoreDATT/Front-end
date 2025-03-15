@@ -13,7 +13,7 @@ export default function HomePage() {
     const onChangePaginate = (page: number) => {
         updateQueryParam({ ...query, page: page.toString(), limit: String(limit) });
     };
-    const { data: categoryData, isPending: categoryIsPending } = useGetAllCategory();
+    const { data: categoryData, isPending: categoryIsPending } = useGetAllCategory({});
 
     return (
         <div className='flex flex-col gap-[5%] md:flex-row xl:gap-[10%]'>

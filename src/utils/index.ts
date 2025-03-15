@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import _ from 'lodash';
+import { GetProp } from 'antd';
+import { UploadProps } from 'antd/lib';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -12,7 +14,15 @@ export const addKeysToArray = <T extends object>(data: T[]): (T & { key: number 
         key: index + 1,
     }));
 };
-export const convertApiResponseToFileList = ({ url, urlRef, isArr }: { url: string; urlRef: string; isArr?: boolean }) => {
+export const convertApiResponseToFileList = ({
+    url,
+    urlRef = '',
+    isArr,
+}: {
+    url: string;
+    urlRef?: string;
+    isArr?: boolean;
+}) => {
     if (!url) return [];
 
     if (isArr) return [{ name: 'image.png', uid: urlRef, status: 'done', url }];

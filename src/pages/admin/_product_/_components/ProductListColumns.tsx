@@ -17,14 +17,10 @@ export const ProductsListColumns = ({
     query,
     getColumnSearchProps,
     getFilteredValue,
-    mutateHideProduct,
-    mutateShowProduct,
 }: {
     categoriesFilter: IFilter[];
     tagsFilter?: IFilter[];
     query: Params;
-    mutateHideProduct: (id: string) => void;
-    mutateShowProduct: (id: string) => void;
     getColumnSearchProps: (dataIndex: string) => ColumnType<any>;
     getFilteredValue: (key: string) => string[] | undefined;
 }): TableProps<IProduct>['columns'] => {
@@ -64,23 +60,9 @@ export const ProductsListColumns = ({
             key: 'stock',
             render: (_, record) => (
                 <>
-                    {/* <div className='flex flex-col justify-between'>
-                        <p className='h-14 whitespace-nowrap'>
-                            Tổng:{' '}
-                            {record?.variants.reduce((acc, curr) => acc + (curr?.stock || 0), 0) !== 0 ? (
-                                record?.variants.reduce((acc, curr) => acc + (curr?.stock || 0), 0)
-                            ) : (
-                                <span className='text-red'>Hết hàng</span>
-                            )}
-                        </p>
-                    </div>
-                    <div className=''>
-                        {record.variants.map((item, index) => (
-                            <p className='my-4 h-8' key={index}>
-                                {item?.stock ? item.stock : <span className='text-red'>Hết hàng</span>}
-                            </p>
-                        ))}
-                    </div> */}
+                    <p className='my-4'>
+                        {record?.stock > 0 ? record.stock : <span className='text-red'>Hết hàng</span>}
+                    </p>
                 </>
             ),
         },
@@ -90,7 +72,7 @@ export const ProductsListColumns = ({
             filters: tagsFilter,
             filteredValue: getFilteredValue('tags'),
             render: (_, record) => {
-                return <h4>{record.tagId.map((item: any) => item.name).join(', ')}</h4>;
+                return <h4>{record.tagId.map((item) => item.name).join(', ')}</h4>;
             },
         },
         {
@@ -99,7 +81,7 @@ export const ProductsListColumns = ({
             filters: categoriesFilter,
             filteredValue: getFilteredValue('category'),
             render: (_, record) => {
-                return <h4>{typeof record.categoryId === 'object' ? record.categoryId.name : record.categoryId}</h4>;
+                return <h4>{typeof record.categoryId === 'object' ? record.categoryId?.name : record.categoryId}</h4>;
             },
         },
         {
@@ -113,8 +95,8 @@ export const ProductsListColumns = ({
             render: (_, record) => {
                 return (
                     <>
-                        <p className='text-red'>{!record.isHide && 'Đã ẩn'}</p>
-                        <p className='text-green-400'>{record.isHide && 'Đang hiển thị'}</p>
+                        <p className='text-red'>{record.isHide && 'Đã ẩn'}</p>
+                        <p className='text-green-400'>{!record.isHide && 'Đang hiển thị'}</p>
                     </>
                 );
             },
@@ -133,38 +115,6 @@ export const ProductsListColumns = ({
                             Cập nhật
                         </Link>
                     </Tooltip>
-                    {record.isHide && (
-                        <Tooltip title='Ẩn sản phẩm này'>
-                            <Popconfirm
-                                placement='leftBottom'
-                                title='Ấn sản phẩm khỏi người dùng?'
-                                description='Người dùng sẽ không thể thấy sản phẩm này của bạn.'
-                                onConfirm={() => mutateHideProduct(record._id)}
-                                okText='Đồng ý'
-                                cancelText='Đóng'
-                            >
-                                <p className='cursor-pointer text-blue-500 transition-colors duration-500 hover:text-blue-400'>
-                                    Ẩn đi
-                                </p>
-                            </Popconfirm>
-                        </Tooltip>
-                    )}
-                    {!record.isHide && (
-                        <Tooltip title='Hiện thị sản phẩm này'>
-                            <Popconfirm
-                                placement='leftBottom'
-                                title='Hiện thị sản phẩm này?'
-                                description='Người dùng sẽ thầy sản phẩm này của bạn.'
-                                onConfirm={() => mutateShowProduct(record._id)}
-                                okText='Đồng ý'
-                                cancelText='Đóng'
-                            >
-                                <p className='text-blue-500 transition-colors duration-500 hover:text-blue-400'>
-                                    Hiển thị
-                                </p>
-                            </Popconfirm>
-                        </Tooltip>
-                    )}
                 </Space>
             ),
         },

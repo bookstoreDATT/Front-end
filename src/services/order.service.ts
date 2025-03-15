@@ -25,6 +25,10 @@ export const orderService = {
         const { data } = await instance.patch<null>(`/payos/update/${orderCode}`);
         return data;
     },
+    async updateStockOnCancelOrderPayosPayment(body: { orderId: string }) {
+        const { data } = await instance.post<null>(`/payos/cancel/update-stock`, body);
+        return data;
+    },
     confirmOrder({ orderId, reason }: { orderId?: string; reason?: string }) {
         return instance.patch<void, { orderId?: string; reason?: string }>(`order/confirm`, {
             orderId,

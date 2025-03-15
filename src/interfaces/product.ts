@@ -34,3 +34,19 @@ export interface IProduct {
     createdAt: string;
     updatedAt: string;
 }
+
+export type ProductData = {
+    name: string;
+    images: IProductFiles | null;
+    thumbnail: IProductFiles | null;
+    categoryId: string;
+    tagId: Tag['_id'][];
+    stock: number;
+    price: number;
+    discount: number;
+    author: string;
+    productCode: string;
+    description: string;
+    publicDate: string;
+    isHide: boolean;
+};

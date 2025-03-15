@@ -9,6 +9,7 @@ import {
     AccountPage,
     CartDetail,
     Checkout,
+    CreateProductPage,
     HomePage,
     LoginPage,
     MyOrderDetailPage,
@@ -18,9 +19,11 @@ import {
     OrdersListPage,
     OrderSuccess,
     ProductDetailPage,
+    ProductListPage,
     RegisterPage,
     SearchPage,
     Suspense,
+    UpdateProductPage,
 } from './LazyRoutes';
 import AdminLayout from '~/layouts/AdminLayout';
 import ProtectedRoute from '~/layouts/protected/ProtectedRoute';
@@ -76,7 +79,7 @@ const PublicRoutes = [
                 ),
             },
             {
-                path: '/order-success',
+                path: '/order-success/:orderId',
                 element: (
                     <Suspense>
                         <AuthProtected protectedType='not-logged'>
@@ -86,7 +89,7 @@ const PublicRoutes = [
                 ),
             },
             {
-                path: '/order-error',
+                path: '/order-error/:orderId',
                 element: (
                     <Suspense>
                         <AuthProtected protectedType='not-logged'>
@@ -213,7 +216,7 @@ const PublicRoutes = [
                         index: true,
                         element: (
                             <Suspense>
-                                <div>Product List</div>
+                                <ProductListPage />
                             </Suspense>
                         ),
                     },
@@ -221,7 +224,7 @@ const PublicRoutes = [
                         path: 'list',
                         element: (
                             <Suspense>
-                                <div>Product List</div>
+                                <ProductListPage />
                             </Suspense>
                         ),
                     },
@@ -229,7 +232,15 @@ const PublicRoutes = [
                         path: 'create',
                         element: (
                             <Suspense>
-                                <div>Create Product</div>
+                                <CreateProductPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ':id/edit',
+                        element: (
+                            <Suspense>
+                                <UpdateProductPage />
                             </Suspense>
                         ),
                     },

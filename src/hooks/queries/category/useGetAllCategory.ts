@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { Params } from 'react-router-dom';
 import { categoryService } from '~/services/category.service';
 
-export const useGetAllCategory = () => {
+export const useGetAllCategory = (params: Params) => {
     return useQuery({
-        queryKey: ['CATEGORY'],
-        queryFn: () => categoryService.getAllCategory(),
+        queryKey: ['CATEGORY', ...Object.values(params)],
+        queryFn: () => categoryService.getAllCategory(params),
     });
 };

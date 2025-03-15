@@ -8,7 +8,6 @@ const RemoveCartItem = ({ productId }: { productId: string }) => {
     const toast = useToast();
 
     const confirm: PopconfirmProps['onConfirm'] = () => {
-        console.log('hehehe');
         removeCartItem(
             { productId },
             {

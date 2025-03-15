@@ -1,8 +1,24 @@
 import { Button, Result, Watermark } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import useUpdateStockOnCancelOrderPayOs from '~/hooks/mutations/order/useUpdateStockOnCancelOrderPayOs';
 
 export default function OrderError() {
     const navigate = useNavigate();
+    const [searchParams, _] = useSearchParams();
+    const { orderId } = useParams();
+    const cancel = searchParams.get('cancel');
+    const status = searchParams.get('status');
+    const { mutate } = useUpdateStockOnCancelOrderPayOs();
+
+    useEffect(() => {
+        console.log(cancel);
+        console.log(status);
+        console.log(orderId);
+        if (cancel && cancel === 'true' && status === 'CANCELLED' && orderId) {
+            mutate({ orderId });
+        }
+    }, []);
     return (
         <Watermark content={['Bookstore', 'Oops :(!']}>
             <div className='h-[100vh]' />
