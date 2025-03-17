@@ -21,6 +21,12 @@ export const OrderDetailPage = lazy(() => import('~/pages/admin/_order_/OrderDet
 export const ProductListPage = lazy(() => import('~/pages/admin/_product_/ProductList'));
 export const CreateProductPage = lazy(() => import('~/pages/admin/_product_/CreateProduct'));
 export const UpdateProductPage = lazy(() => import('~/pages/admin/_product_/UpdateProduct'));
+export const CategoryListPage = lazy(() => import('~/pages/admin/_category_/CategoryList'));
+export const CreateCategoryPage = lazy(() => import('~/pages/admin/_category_/CreateCategory'));
+export const UpdateCategoryPage = lazy(() => import('~/pages/admin/_category_/UpdateCategory'));
+export const TagListPage = lazy(() => import('~/pages/admin/_tag_/TagList'));
+export const CreateTagPage = lazy(() => import('~/pages/admin/_tag_/CreateTag'));
+export const UpdateTagPage = lazy(() => import('~/pages/admin/_tag_/UpdateTag'));
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>Loading</div>}>{children}</React.Suspense>;

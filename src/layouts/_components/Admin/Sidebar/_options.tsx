@@ -36,4 +36,15 @@ export const menuGroups: IMenuItem[] = [
             },
         ],
     },
+    {
+        icon: <ProductOutlined />,
+        label: 'Quản lý thể loại',
+        children: [
+            { label: 'Tất cả thể loại', route: '/admin/tags' },
+            {
+                label: 'Thêm mới thể loại',
+                route: '/admin/tags/create',
+            },
+        ],
+    },
 ];

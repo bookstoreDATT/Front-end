@@ -7,7 +7,7 @@ import { useGetAllCategory } from '~/hooks/queries/category/useGetAllCategory';
 import { useGetAllProducts } from '~/hooks/queries/products/useGetAllProducts';
 export default function HomePage() {
     const [filter, setFilter] = useState<'all' | 'bestPrice' | 'new' | 'lowPrice' | 'highPrice'>('all');
-    const { query, updateQueryParam } = useFilter();
+    const { query, updateQueryParam, reset } = useFilter();
     const limit = 10;
     const { data, isPending } = useGetAllProducts(query);
     const onChangePaginate = (page: number) => {
@@ -23,7 +23,12 @@ export default function HomePage() {
                     categoryData.data.length !== 0 ? (
                         <ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm md:flex-col md:gap-1'>
                             {categoryData?.data.map((item, index) => (
-                                <li key={index}>
+                                <li
+                                    key={index}
+                                    onClick={() => {
+                                        updateQueryParam({ ...query, ['categoryId']: item._id });
+                                    }}
+                                >
                                     <Link to={'/'} className='hover:opacity-80'>
                                         {item.name}
                                     </Link>
@@ -39,13 +44,13 @@ export default function HomePage() {
                     </div>
                 )}
             </div>
-            <div className='mt-4 md:mt-0'>
+            <div className='mt-4 w-full max-w-[1200px] md:mt-0'>
                 <div>
                     <h3 className='text-xl'>Nhà sách Tiki</h3>
                     <img
                         className='mt-4 h-48 w-full md:h-72'
-                        src='https://vietgigs.vn/public/storage/gigs/gallery/large/EC6D5D824FE2BE40EAB4.webp'
-                        alt=''
+                        src='https://cdn1.fahasa.com/media/magentothem/banner7/tranguudai_840x320.png'
+                        alt='bookstore banner'
                     />
                 </div>
                 <div className='mt-6'>
@@ -60,34 +65,12 @@ export default function HomePage() {
                         </li>
                         <li>
                             <button
-                                onClick={() => setFilter('bestPrice')}
-                                className={`${filter === 'bestPrice' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
+                                onClick={() => {
+                                    reset();
+                                }}
+                                className={`cursor-pointer px-2 py-2`}
                             >
-                                <p className={`${filter === 'bestPrice' && 'text-[#0D5CB6]'} text-center`}>Bán chạy</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setFilter('new')}
-                                className={`${filter === 'new' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
-                            >
-                                <p className={`${filter === 'new' && 'text-[#0D5CB6]'} text-center`}>Mới nhất</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setFilter('lowPrice')}
-                                className={`${filter === 'lowPrice' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
-                            >
-                                <p className={`${filter === 'lowPrice' && 'text-[#0D5CB6]'} text-center`}>Giá thấp</p>
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setFilter('highPrice')}
-                                className={`${filter === 'highPrice' && 'border-b-3 border-[#0D5CB6]'} cursor-pointer px-2 py-2`}
-                            >
-                                <p className={`${filter === 'highPrice' && 'text-[#0D5CB6]'} text-center`}>Giá cao</p>
+                                <p className={`text-center`}>Đặt lại</p>
                             </button>
                         </li>
                     </ul>

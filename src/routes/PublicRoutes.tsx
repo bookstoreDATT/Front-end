@@ -8,8 +8,11 @@ import MainLayout from '../layouts/client/MainLayout';
 import {
     AccountPage,
     CartDetail,
+    CategoryListPage,
     Checkout,
+    CreateCategoryPage,
     CreateProductPage,
+    CreateTagPage,
     HomePage,
     LoginPage,
     MyOrderDetailPage,
@@ -23,7 +26,10 @@ import {
     RegisterPage,
     SearchPage,
     Suspense,
+    TagListPage,
+    UpdateCategoryPage,
     UpdateProductPage,
+    UpdateTagPage,
 } from './LazyRoutes';
 import AdminLayout from '~/layouts/AdminLayout';
 import ProtectedRoute from '~/layouts/protected/ProtectedRoute';
@@ -241,6 +247,82 @@ const PublicRoutes = [
                         element: (
                             <Suspense>
                                 <UpdateProductPage />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            {
+                path: 'categories',
+                children: [
+                    {
+                        index: true,
+                        path: '',
+                        element: (
+                            <Suspense>
+                                <CategoryListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <CategoryListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <CreateCategoryPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ':id/edit',
+                        element: (
+                            <Suspense>
+                                <UpdateCategoryPage />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            {
+                path: 'tags',
+                children: [
+                    {
+                        index: true,
+                        path: '',
+                        element: (
+                            <Suspense>
+                                <TagListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <TagListPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <CreateTagPage />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ':id/edit',
+                        element: (
+                            <Suspense>
+                                <UpdateTagPage />
                             </Suspense>
                         ),
                     },

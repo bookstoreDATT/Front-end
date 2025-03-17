@@ -1,14 +1,17 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import StaticImages from '~/assets/anhdd.png';
 import ClickOutside from '~/components/_common/ClickOutside';
 import ExitIcon from '~/components/_common/Icons/ExitIcon';
+import { logout } from '~/store/slice/authSlice';
 import MenuItem from './MenuItem';
 
 const DropdownUser = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dispatch = useDispatch();
+
     return (
         <ClickOutside
             onClick={() => {
@@ -38,7 +41,9 @@ const DropdownUser = () => {
                         <MenuItem />
                     </ul>
                     <button
-                        onClick={() => {}}
+                        onClick={() => {
+                            dispatch(logout());
+                        }}
                         className='hover:text-primary flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out lg:text-base'
                     >
                         <ExitIcon />
