@@ -13,6 +13,7 @@ import ModalChangePassword from './_components/ModalChangePassword';
 const profileSchema = z.object({
     userName: z.string().min(3, 'Tên người dùng phải có ít nhất 3 ký tự'),
     email: z.string().email('Email không hợp lệ'),
+    phone: z.string().regex(/^(?:\+84|0)[2-9][0-9]{8,9}$/, 'Số điện thoại không hợp lệ'),
     avatar: z.any().optional(),
 });
 
@@ -35,6 +36,7 @@ const Profile = () => {
             userName: profile?.userName,
             email: profile?.email,
             avatar: undefined,
+            phone: profile?.phone,
         },
     });
     useEffect(() => {
@@ -42,6 +44,7 @@ const Profile = () => {
             form.setFieldsValue({
                 userName: profile.userName,
                 email: profile.email,
+                phone: profile.phone,
             });
         }
     }, [profile, form]);
@@ -69,6 +72,7 @@ const Profile = () => {
         const formDataUpdateProfile = new FormData();
         formDataUpdateProfile.append('userName', data.userName);
         formDataUpdateProfile.append('email', data.email);
+        formDataUpdateProfile.append('phone', data.phone);
         if (data.avatar) {
             formDataUpdateProfile.append('avatar', data.avatar);
         }
@@ -181,6 +185,19 @@ const Profile = () => {
                                     name='email'
                                     control={control}
                                     render={({ field }) => <Input disabled placeholder='Email' {...field} />}
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                label='Phone'
+                                required
+                                validateStatus={errors.phone ? 'error' : ''}
+                                help={errors.phone?.message}
+                            >
+                                <Controller
+                                    name='phone'
+                                    control={control}
+                                    render={({ field }) => <Input placeholder='Phone' {...field} />}
                                 />
                             </Form.Item>
 

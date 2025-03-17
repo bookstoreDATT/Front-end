@@ -7,6 +7,7 @@ export const registerSchema = z
             .min(3, { message: 'Tên người dùng phải có ít nhất 3 ký tự' }),
         email: z.string({ message: 'Email không được để trống' }).email('Email không hợp lệ'),
         password: z.string({ message: 'Mật khẩu không được để trống' }).min(6, 'Mật khẩu phải có ít nhất 6 ký tự'),
+        phone: z.string().regex(/^(?:\+84|0)[2-9][0-9]{8,9}$/, 'Số điện thoại không hợp lệ'),
         confirmPassword: z.string({ message: 'Mật khẩu không được để trống' }),
         policy: z.literal(true, {
             errorMap: () => ({ message: 'Bạn phải đồng ý với điều khoản' }),

@@ -18,10 +18,10 @@ export default function Register() {
     });
 
     const onSubmit = (values: RegisterFormType) => {
-        console.log(values);
         const payload = {
             email: values.email,
             userName: values.userName,
+            phone: values.phone,
             password: values.password,
         };
         mutate(payload, {
@@ -71,6 +71,20 @@ export default function Register() {
                             >
                                 <Controller
                                     name='email'
+                                    control={control}
+                                    render={({ field }) => <Input {...field} />}
+                                />
+                            </Form.Item>
+
+                            {/* Input Email */}
+                            <Form.Item
+                                label='Phone'
+                                required
+                                validateStatus={errors.phone ? 'error' : ''}
+                                help={errors.phone?.message}
+                            >
+                                <Controller
+                                    name='phone'
                                     control={control}
                                     render={({ field }) => <Input {...field} />}
                                 />

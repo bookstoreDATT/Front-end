@@ -43,7 +43,6 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
             setOpen(true);
         }
     };
-
     return (
         <div className='flex h-full flex-col'>
             <Title level={4} className='mb-4'>
@@ -82,7 +81,16 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
                 <Space direction='vertical' className='w-full'>
                     <div className='flex justify-between'>
                         <Text>Tạm tính:</Text>
-                        <Text>{formatCurrency(checkoutInfor.totalPrice + shippingFee)}</Text>
+                        <Text>
+                            {formatCurrency(
+                                cartItems.reduce((acc, curr) => {
+                                    const discountRate = curr.productId.discount / 100;
+                                    const discountedPrice =
+                                        curr.productId.price - (curr.productId.price * discountRate) / 100;
+                                    return acc + curr.quantity * discountedPrice;
+                                }, 0) + shippingFee
+                            )}
+                        </Text>
                     </div>
                     <div className='mt-2'>
                         <h3 className='text-lg font-semibold'>Phương thức thanh toán</h3>
@@ -100,7 +108,14 @@ const ProductItemsCheckout: React.FC<{ isAddressEmpty: boolean }> = ({
                     <Row justify='space-between' align='middle'>
                         <h3 className='text-2xl font-semibold'>Tổng cộng:</h3>
                         <h3 className='text-2xl font-semibold text-red-500'>
-                            {formatCurrency(checkoutInfor.totalPrice + shippingFee)}
+                            {formatCurrency(
+                                cartItems.reduce((acc, curr) => {
+                                    const discountRate = curr.productId.discount / 100;
+                                    const discountedPrice =
+                                        curr.productId.price - (curr.productId.price * discountRate) / 100;
+                                    return acc + curr.quantity * discountedPrice;
+                                }, 0) + shippingFee
+                            )}
                         </h3>
                     </Row>
                 </Space>

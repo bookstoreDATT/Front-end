@@ -1,22 +1,8 @@
 import { Button, Result, Watermark } from 'antd';
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useUpdateOrderPayment from '~/hooks/mutations/order/useUpdateOrderPayment';
+import { useNavigate } from 'react-router-dom';
 
 export default function OrderSuccess() {
     const navigate = useNavigate();
-    const location = useLocation();
-    const { mutate } = useUpdateOrderPayment();
-    const params = new URLSearchParams(location.search);
-    const code = params.get('code');
-    const cancel = params.get('cancel') || 'true';
-    const orderCode = Number(params.get('orderCode'));
-
-    useEffect(() => {
-        if (code === '00' && !JSON.parse(cancel) && orderCode && Number.isInteger(orderCode)) {
-            mutate(orderCode);
-        }
-    }, []);
 
     return (
         <Watermark content={['Bookstore', 'Thank you!']}>

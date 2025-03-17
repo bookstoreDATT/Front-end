@@ -5,6 +5,7 @@ export interface ICartItem {
         _id: string;
         stock: number;
         price: number;
+        discount: number;
     };
     quantity: number;
 }

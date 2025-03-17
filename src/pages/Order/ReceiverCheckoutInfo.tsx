@@ -64,11 +64,15 @@ const ReceiverCheckoutInfo: React.FC<{ setIsAdressEmpty: (value: boolean) => voi
                         isReviewDisabled: false,
                         isReviewed: false,
                     })),
-                    totalPrice: cartItems.reduce((acc, curr) => acc + curr.quantity * curr.productId.price, 0),
+                    totalPrice: cartItems.reduce((acc, curr) => {
+                        const discountRate = curr.productId.discount / 100;
+                        const discountedPrice = curr.productId.price - (curr.productId.price * discountRate) / 100;
+                        return acc + curr.quantity * discountedPrice;
+                    }, 0),
                 })
             );
         }
-    }, [isLoading]);
+    }, [isLoading, userProfile, cartItems]);
 
     return (
         <Card className='w-full shadow-md transition-shadow duration-300 hover:shadow-lg'>
@@ -88,7 +92,7 @@ const ReceiverCheckoutInfo: React.FC<{ setIsAdressEmpty: (value: boolean) => voi
             >
                 <Descriptions.Item label='Tên khách hàng'>{userProfile?.userName}</Descriptions.Item>
                 <Descriptions.Item label='Email'>{userProfile?.email}</Descriptions.Item>
-                <Descriptions.Item label='Số điện thoại'>{''}</Descriptions.Item>
+                <Descriptions.Item label='Số điện thoại'>{userProfile?.phone}</Descriptions.Item>
             </Descriptions>
 
             <Divider />

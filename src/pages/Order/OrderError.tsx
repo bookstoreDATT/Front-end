@@ -12,11 +12,10 @@ export default function OrderError() {
     const { mutate } = useUpdateStockOnCancelOrderPayOs();
 
     useEffect(() => {
-        console.log(cancel);
-        console.log(status);
-        console.log(orderId);
         if (cancel && cancel === 'true' && status === 'CANCELLED' && orderId) {
             mutate({ orderId });
+        } else {
+            navigate('/', { replace: true });
         }
     }, []);
     return (

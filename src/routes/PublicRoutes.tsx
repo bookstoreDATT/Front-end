@@ -85,7 +85,7 @@ const PublicRoutes = [
                 ),
             },
             {
-                path: '/order-success/:orderId',
+                path: '/order-success',
                 element: (
                     <Suspense>
                         <AuthProtected protectedType='not-logged'>

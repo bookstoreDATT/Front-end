@@ -57,7 +57,7 @@ export default function ProductDetail() {
                                 <h1 className='text-2xl font-medium capitalize'>{product.name}</h1>
                                 {product.discount !== 0 && (
                                     <p className='rounded-md border-[1px] border-[#FF424E] bg-[#FFF0F1] px-1 py-1 text-xs font-medium text-[#FF424E]'>
-                                        - 15%
+                                        -{product.discount}%
                                     </p>
                                 )}
                             </div>
